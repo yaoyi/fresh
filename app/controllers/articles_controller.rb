@@ -2,7 +2,11 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articles = Article.page(params[:page])
+    @articles = Article.all
+    if params[:tag]
+      @articles = @articles.tagged_with(params[:tag])
+    end
+    @articles = @articles.page(params[:page])
   end
 
   def show

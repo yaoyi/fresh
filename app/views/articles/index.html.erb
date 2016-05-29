@@ -1,4 +1,4 @@
-<%= link_to 'New Article', new_post_path, :class => "btn btn-default" %>
+<%= link_to 'New Article', new_article_path, :class => "btn btn-default" %>
 <br>
 <br>
 <% @articles.each do |article| %>
@@ -7,7 +7,9 @@
       <h2><%= article.title %></h2>
       <div class="text-muted">
         tags:
-        <%= article.tag_list%>
+        <% article.tags.each do |tag|%>
+          <%= link_to tag.name, articles_path(tag: tag.name) %>
+        <% end %>
         <div class="pull-right">
           <%= article.created_at.strftime('%B %d, %Y %H:%M') %>
         </div>

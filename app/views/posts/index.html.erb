@@ -6,8 +6,10 @@
     <div class="panel-heading">
       <h2><%= post.title %></h2>
       <div class="text-muted">
-        tags:
-        <%= post.tag_list%>
+        <i class="fa fa-tags"></i>
+        <% post.tags.each do |tag|%>
+          <%= link_to tag.name, posts_path(tag: tag.name) %>
+        <% end %>
         <div class="pull-right">
           <%= post.created_at.strftime('%B %d, %Y %H:%M') %>
         </div>

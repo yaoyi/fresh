@@ -1,0 +1,6 @@
+<p>
+  <%= gravatar_image_tag(@comment.user.email, :style => "width: 30px; height: 30px;border-radius: 50%;") %>
+  &nbsp
+  <%= @comment.body %>
+</p>
+<hr>

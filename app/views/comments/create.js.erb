@@ -1,0 +1,2 @@
+$('.new_comment textarea').val('')
+$('<%= j(render(:partial => @comment)) %>').prependTo('#comments').hide().fadeIn();

@@ -1,0 +1,41 @@
+<%= link_to 'New Article', new_post_path, :class => "btn btn-default" %>
+<br>
+<br>
+<% @articles.each do |article| %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2><%= article.title %></h2>
+      <div class="text-muted">
+        tags:
+        <%= article.tag_list%>
+        <div class="pull-right">
+          <%= article.created_at.strftime('%B %d, %Y %H:%M') %>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <p>
+        <%= truncate_html(article.body, length: 150, omission: '...') %>
+      </p>
+    </div>
+    <div class="panel-footer">
+      <div id="comments" %>
+        <% article.comments.order(created_at: :desc).limit(3).each do |comment| %>
+          <p>
+            <%= gravatar_image_tag(comment.user.email, :style => "width: 30px; height: 30px;border-radius: 50%;") %>
+            &nbsp
+            <%= comment.body %>
+          </p>
+          <hr>
+        <% end %>
+      </div>
+      <div>
+        <%= link_to 'Show', article %>
+        <%= link_to 'Edit', edit_article_path(article) %>
+        <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= paginate @articles, :theme => 'twitter-bootstrap-3'%>

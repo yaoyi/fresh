@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<h2>
+  <%= @article.title %>
+</h2>
+
+<div class="text-muted">
+  tags:
+  <%= @article.tag_list%>
+  <div class="pull-right">
+  <%= @article.created_at.strftime('%B %d, %Y %H:%M') %>
+</div>
+</div>
+
+<br>
+
+<p>
+  <%= raw @article.body %>
+</p>
+
+<hr>
+
+<%= form_for Comment.new, remote: true do |f|%>
+  <%= f.hidden_field :commentable_id, :value => @article.id %>
+  <%= f.hidden_field :commentable_type, :value => 'Article' %>
+  <div class="form-group">
+    <%= f.text_area :body, :class => 'form-control', :placeholder => 'Leave your comment' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit 'Save', :class => 'btn btn-default' %>
+  </div>
+<% end %>
+
+<div id="comments" %>
+  <% @comments.order(created_at: :desc).each do |comment| %>
+    <p>
+      <%= gravatar_image_tag(comment.user.email, :style => "width: 30px;height: 30px;border-radius: 50%;") %>
+      &nbsp
+      <%= comment.body %>
+    </p>
+    <hr>
+  <% end %>
+</div>
+
+<br>
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
